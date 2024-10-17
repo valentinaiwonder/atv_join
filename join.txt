@@ -1,0 +1,82 @@
+--1 - Selecione todos os pacientes juntamente com 
+--os detalhes dos seus tutores, incluindo nome, endereço e número de telefone do tutor.
+
+SELECT P.*, T.NOME, T.ENDERECO, T.TELEFONE 
+FROM PACIENTE p
+LEFT JOIN TUTOR T ON T.ID_TUTOR = P.ID_TUTOR
+
+--2 - Selecione apenas os pacientes que têm um tutor associado, trazendo todos
+--os detalhes dos pacientes e dos seus tutores.
+
+SELECT P.*, T.NOME, T.ENDERECO, T.TELEFONE 
+FROM PACIENTE p
+INNER JOIN TUTOR T ON T.ID_TUTOR = P.ID_TUTOR
+
+--3 - Selecione todos os tutores juntamente com os detalhes dos seus pacientes, 
+--incluindo nome, espécie e raça do paciente.
+
+SELECT T.*, P.NOME, P.ESPECIE, P.RACA, P.PESO
+FROM TUTOR t
+LEFT JOIN PACIENTE p ON P.ID_PACIENTE = P.ID_PACIENTE
+
+--4 - Selecione apenas os tutores que têm pacientes associados, trazendo todos os
+--detalhes dos tutores e dos seus pacientes.
+
+SELECT T.*, P.NOME, P.ESPECIE, P.RACA, P.PESO
+FROM TUTOR t
+INNER JOIN PACIENTE p ON P.ID_PACIENTE = P.ID_PACIENTE
+
+--5 - Selecione todos os medicamentos juntamente com os detalhes das suas prescrições, incluindo
+--a data da prescrição e a quantidade prescrita.
+
+
+SELECT I.*, M.NOME, R.DATA_EMISSAO, I.QUANTIDADE
+FROM ITENSRECEITA I
+INNER JOIN MEDICAMENTOS M ON I.ID_MEDICAMENTO = M.ID_MEDICAMENTO
+INNER JOIN RECEITA R ON I.ID_RECEITA = R.ID_RECEITA
+
+-- 6 - Selecione apenas os medicamentos que foram prescritos, trazendo todos os 
+-- detalhes dos medicamentos e das suas prescrições.
+
+SELECT I.*, M.NOME, R.DATA_EMISSAO, I.QUANTIDADE
+FROM ITENSRECEITA I
+left JOIN MEDICAMENTOS M ON I.ID_MEDICAMENTO = M.ID_MEDICAMENTO
+LEFT JOIN RECEITA R ON I.ID_RECEITA = R.ID_RECEITA
+
+-- Selecione todos os registros de prescrição juntamente com os detalhes
+-- dos pacientes associados, incluindo o nome e a espécie do paciente.
+
+SELECT R.DATA_EMISSAO
+	 , I.QUANTIDADE 
+	 , I.DOSAGEM
+	 , p.NOME
+	 , p.ESPECIE	
+FROM RECEITA r
+LEFT JOIN AGENDAMENTO a ON A.ID_AGENDAMENTO = R.ID_AGENDAMENTO
+LEFT JOIN PACIENTE p ON P.ID_PACIENTE = A.ID_PACIENTE 
+LEFT JOIN ITENSRECEITA i ON R.ID_RECEITA = R.ID_RECEITA 
+
+-- 8 - Selecione apenas os registros de prescrição que estão associados
+--a um paciente, trazendo todos os detalhes dos registros de prescrição 
+-- e dos pacientes associados.
+
+SELECT R.DATA_EMISSAO
+	 , I.QUANTIDADE 
+	 , I.DOSAGEM
+	 , p.NOME
+	 , p.ESPECIE	
+FROM RECEITA r
+INNER JOIN AGENDAMENTO a ON A.ID_AGENDAMENTO = R.ID_AGENDAMENTO
+INNER JOIN PACIENTE p ON P.ID_PACIENTE = A.ID_PACIENTE 
+INNER JOIN ITENSRECEITA i ON R.ID_RECEITA = R.ID_RECEITA 
+
+--9 - Selecione todos os registros de prescrição juntamente com os detalhes 
+--dos medicamentos associados, incluindo o nome e a dosagem do medicamento.
+
+SELECT R.*, M.NOME AS NOME_MEDICAMENTO, I.DOSAGEM
+FROM RECEITA R
+LEFT JOIN ITENSRECEITA I ON R.ID_RECEITA = I.ID_RECEITA
+LEFT JOIN MEDICAMENTOS M ON I.ID_MEDICAMENTO = M.ID_MEDICAMENTO
+
+--10 - Selecione apenas os registros de prescrição que têm um medicamento associado,
+--trazendo todos os detalhes dos registros de prescrição e dos medicamentos associados.
